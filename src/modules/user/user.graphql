@@ -1,9 +1,25 @@
+type Query {
+    getUsers: [User]
+}
+
+type Mutation {
+    createUser(input: UserData): User
+    editUser(id: ID, input: UserDataEdit): User
+    deleteUser(id: ID): User
+}
+
 type User {
     id: ID!,
     username: String,
-    password: String,
+    password: String
 }
 
-type Query {
-    ping: String
+input UserData {
+    username: String,
+    password: String
+}
+
+input UserDataEdit {
+    username: String,
+    password: String
 }
