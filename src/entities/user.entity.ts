@@ -1,9 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, JoinColumn, ManyToOne } from 'typeorm';
+import { Roles } from './role.entity';
 
 @Entity()
 export class Users {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @Column({name: 'rut', type: 'text', nullable: true})
+  rut: string;
 
   @Column({name: 'username', type: 'text', nullable: true})
   username: string;
@@ -20,4 +24,8 @@ export class Users {
   @DeleteDateColumn({ name: 'deleted_at', type: 'timestamp' })
   deletedAt: Date
 
+  @Column({ name: 'id_role', type: 'uuid', nullable: true})
+  @JoinColumn({ name: 'id_role' })
+  @ManyToOne(() => Roles)
+  role: Roles
 }

@@ -1,13 +1,3 @@
-// import { Module } from '@nestjs/common';
-// import { UserService } from './user.service';
-// import { UserResolver } from './user.resolver';
-
-// @Module({
-//   providers: [UserService, UserResolver],
-// })
-// export class UserModule {}
-
-
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from '../../database/database.module';
 import { userProviders } from './user.providers';
@@ -19,7 +9,7 @@ import { UserService } from './user.service';
   providers: [
     ...userProviders,
     UserService,
-    UserResolver
+    UserResolver,
   ],
 })
 export class UserModule {}

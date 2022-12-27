@@ -2,12 +2,14 @@ import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Users } from 'src/entities/user.entity';
 import { User, UserData, UserDataEdit } from 'src/graphql';
+import { Roles } from 'src/entities';
 
 @Injectable()
 export class UserService {
   constructor(
     @Inject('USER_REPOSITORY')
     private userRepository: Repository<Users>,
+    // private roleRepository: Repository<Roles>,
   ) {}
 
   async getUsers(): Promise<Users[]> {
@@ -20,71 +22,84 @@ export class UserService {
     }
   }
 
-  async getUserById( id: string): Promise<Users> {
-    try {
-        return this.userRepository.findOne({
-            where: { id: id, deletedAt: null }
-        })
-    } catch (error) {
-        throw error;
-    }
-  }
+//   async getUserById( id: string ): Promise<Users> {
+//     try {
+//         return this.userRepository.findOne({
+//             where: { id: id, deletedAt: null }
+//         })
+//     } catch (error) {
+//         throw error;
+//     }
+//   }
+
+//   async getUserByRut( rut: string ): Promise<Users> {
+//     try {
+//         return this.userRepository.findOne({
+//             where: { rut: rut, deletedAt: null }
+//         })
+//     } catch (error) {
+//         throw error;
+//     }
+//   }
     
-  async createUser( userData: UserData ): Promise<User> {
-    try {
-        const { username, password } = userData;
-        const user = new Users();
+//   async createUser( userData: UserData ): Promise<User> {
+    // try {
+    //     const { username, password, idRole } = userData;
 
-        user.username = username;
-        user.password = password;
+    //     const idr = await this.roleRepository.findOne({
+    //         where: { id: idRole, deleteAt: null }
+    //     })
 
-        return this.userRepository.save(user);
+    //     const user = new Users();
 
+    //     user.username = username;
+    //     user.password = password;
+    //     user.role = idr;
+
+    //     return this.userRepository.save(user);
+
+    // } catch (error) {
+    //     throw error;
         
-    } catch (error) {
-        throw error;
-        
-    }
+    // }
   }
 
-  async editUser( id: string, userDataEdit: UserDataEdit ): Promise<Users> {
-    try {
+//   async editUser( id: string, userDataEdit: UserDataEdit ): Promise<Users> {
+//     try {
 
-        const user = await this.getUserById(id);
+//         const user = await this.getUserById(id);
 
-        if (!user) {
-            throw new HttpException(`User con id=${id} no existe`, HttpStatus.BAD_REQUEST);
-        }
+//         if (!user) {
+//             throw new HttpException(`User con id=${id} no existe`, HttpStatus.BAD_REQUEST);
+//         }
 
-        const { username, password } = userDataEdit;
+//         const { username, password } = userDataEdit;
 
-        user.username = username;
-        user.password = password;
+//         user.username = username;
+//         user.password = password;
 
-        return this.userRepository.save(user);
+//         return this.userRepository.save(user);
 
+//     } catch (error) {
+//         throw error;
+//     }
+//   }
+
+//   async deleteUser( id: string ): Promise<Users> {
+//     try {
+
+//         const user = await this.getUserById(id);
+
+//         if (!user) {
+//             throw new HttpException(`User con id=${id} no existe`, HttpStatus.BAD_REQUEST);
+//         }
+
+//         user.deletedAt = new Date();
+
+//         return this.userRepository.save(user);
         
-    } catch (error) {
-        throw error;
-    }
-  }
+//     } catch (error) {
+//         throw error;
+//     }
+//   }
 
-  async deleteUser( id: string ): Promise<Users> {
-    try {
-
-        const user = await this.getUserById(id);
-
-        if (!user) {
-            throw new HttpException(`User con id=${id} no existe`, HttpStatus.BAD_REQUEST);
-        }
-
-        user.deletedAt = new Date();
-
-        return this.userRepository.save(user);
-
-        
-    } catch (error) {
-        throw error;
-    }
-  }
-}

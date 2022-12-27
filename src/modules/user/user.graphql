@@ -3,23 +3,29 @@ type Query {
 }
 
 type Mutation {
-    createUser(input: UserData): User
-    editUser(id: ID, input: UserDataEdit): User
-    deleteUser(id: ID): User
+    createUser( input: UserData ): User
+    editUser( id: ID, input: UserDataEdit ): User
+    deleteUser( id: ID ): User
 }
 
 type User {
     id: ID!,
+    rut: String
     username: String,
-    password: String
+    password: String,
+    role: Role
 }
 
 input UserData {
+    rut: String,
     username: String,
-    password: String
+    password: String,
+    idRole: String
 }
 
 input UserDataEdit {
+    rut: String,
     username: String,
-    password: String
+    password: String,
+    idRole: String
 }

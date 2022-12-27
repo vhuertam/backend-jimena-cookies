@@ -1,6 +1,7 @@
 import { 
-    Users
-} from 'src/entities/user.entity';
+  Roles,
+  Users
+} from '../entities'
 
 import { DataSource } from 'typeorm';
 
@@ -18,7 +19,8 @@ const dataSource = new DataSource({
   password: DB_PASSWORD,
   database: DB_NAME,
   entities: [
-    Users
+    Users,
+    Roles
 ],
   synchronize: true,
 });
