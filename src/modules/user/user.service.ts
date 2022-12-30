@@ -9,7 +9,8 @@ export class UserService {
   constructor(
     @Inject('USER_REPOSITORY')
     private userRepository: Repository<Users>,
-    // private roleRepository: Repository<Roles>,
+    @Inject('ROLE_REPOSITORY')
+    private roleRepository: Repository<Roles>,
   ) {}
 
   async getUsers(): Promise<Users[]> {
@@ -22,84 +23,86 @@ export class UserService {
     }
   }
 
-//   async getUserById( id: string ): Promise<Users> {
-//     try {
-//         return this.userRepository.findOne({
-//             where: { id: id, deletedAt: null }
-//         })
-//     } catch (error) {
-//         throw error;
-//     }
-//   }
-
-//   async getUserByRut( rut: string ): Promise<Users> {
-//     try {
-//         return this.userRepository.findOne({
-//             where: { rut: rut, deletedAt: null }
-//         })
-//     } catch (error) {
-//         throw error;
-//     }
-//   }
-    
-//   async createUser( userData: UserData ): Promise<User> {
-    // try {
-    //     const { username, password, idRole } = userData;
-
-    //     const idr = await this.roleRepository.findOne({
-    //         where: { id: idRole, deleteAt: null }
-    //     })
-
-    //     const user = new Users();
-
-    //     user.username = username;
-    //     user.password = password;
-    //     user.role = idr;
-
-    //     return this.userRepository.save(user);
-
-    // } catch (error) {
-    //     throw error;
-        
-    // }
+  async getUserById( id: string ): Promise<Users> {
+    try {
+        return this.userRepository.findOne({
+            where: { id: id, deletedAt: null }
+        })
+    } catch (error) {
+        throw error;
+    }
   }
 
-//   async editUser( id: string, userDataEdit: UserDataEdit ): Promise<Users> {
-//     try {
+  async getUserByRut( rut: string ): Promise<Users> {
+    try {
+        return this.userRepository.findOne({
+            where: { rut: rut, deletedAt: null }
+        })
+    } catch (error) {
+        throw error;
+    }
+  }
+    
+  async createUser( userData: UserData ): Promise<User> {
+    try {
+        const { username, password, idRole, rut } = userData;
 
-//         const user = await this.getUserById(id);
+        const idr = await this.roleRepository.findOne({
+            where: { id: idRole, deleteAt: null }
+        })
 
-//         if (!user) {
-//             throw new HttpException(`User con id=${id} no existe`, HttpStatus.BAD_REQUEST);
-//         }
+        const user = new Users();
 
-//         const { username, password } = userDataEdit;
+        user.username = username;
+        user.password = password;
+        user.rut = rut;
+        user.role = idr;
 
-//         user.username = username;
-//         user.password = password;
+        return this.userRepository.save(user);
 
-//         return this.userRepository.save(user);
-
-//     } catch (error) {
-//         throw error;
-//     }
-//   }
-
-//   async deleteUser( id: string ): Promise<Users> {
-//     try {
-
-//         const user = await this.getUserById(id);
-
-//         if (!user) {
-//             throw new HttpException(`User con id=${id} no existe`, HttpStatus.BAD_REQUEST);
-//         }
-
-//         user.deletedAt = new Date();
-
-//         return this.userRepository.save(user);
+    } catch (error) {
+        throw error;
         
-//     } catch (error) {
-//         throw error;
-//     }
-//   }
+    }
+  }
 
+  // async editUser( id: string, userDataEdit: UserDataEdit ): Promise<Users> {
+  //   try {
+
+  //       const user = await this.getUserById(id);
+
+  //       if (!user) {
+  //           throw new HttpException(`User con id=${id} no existe`, HttpStatus.BAD_REQUEST);
+  //       }
+
+  //       const { username, password } = userDataEdit;
+
+  //       user.username = username;
+  //       user.password = password;
+
+  //       return this.userRepository.save(user);
+
+  //   } catch (error) {
+  //       throw error;
+  //   }
+  // }
+
+  // async deleteUser( id: string ): Promise<Users> {
+  //   try {
+
+  //       const user = await this.getUserById(id);
+
+  //       if (!user) {
+  //           throw new HttpException(`User con id=${id} no existe`, HttpStatus.BAD_REQUEST);
+  //       }
+
+  //       user.deletedAt = new Date();
+
+  //       return this.userRepository.save(user);
+        
+  //   } catch (error) {
+  //       throw error;
+  //   }
+  // }
+
+}
