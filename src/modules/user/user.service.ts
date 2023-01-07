@@ -1,4 +1,4 @@
-import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, Inject, HttpException, HttpStatus, UseFilters } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Users } from 'src/entities/user.entity';
 import { User, UserData, UserDataEdit } from 'src/graphql';
@@ -16,6 +16,7 @@ export class UserService {
   async getUsers(): Promise<Users[]> {
     try {
         return this.userRepository.find({
+            relations: ['role'],
             where: {deletedAt: null}
         });
     } catch (error) {
@@ -26,6 +27,7 @@ export class UserService {
   async getUserById( id: string ): Promise<Users> {
     try {
         return this.userRepository.findOne({
+            relations: ['role'],
             where: { id: id, deletedAt: null }
         })
     } catch (error) {
@@ -36,7 +38,19 @@ export class UserService {
   async getUserByRut( rut: string ): Promise<Users> {
     try {
         return this.userRepository.findOne({
+            relations: ['role'],
             where: { rut: rut, deletedAt: null }
+        })
+    } catch (error) {
+        throw error;
+    }
+  }
+
+  async getUserByUsername( username: string ): Promise<Users> {
+    try {
+        return this.userRepository.findOne({
+            relations: ['role'],
+            where: { username: username, deletedAt: null }
         })
     } catch (error) {
         throw error;
@@ -47,18 +61,75 @@ export class UserService {
     try {
         const { username, password, idRole, rut } = userData;
 
-        const idr = await this.roleRepository.findOne({
-            where: { id: idRole, deleteAt: null }
+        if (!rut) {
+          throw new HttpException(
+              'Parametro rut es indefinido',
+              HttpStatus.BAD_REQUEST,
+          );
+        }
+
+        if (!username) {
+          throw new HttpException(
+              'Parametro username es indefinido',
+              HttpStatus.BAD_REQUEST,
+          );
+        }
+
+        if (!password) {
+          throw new HttpException(
+              'Parametro rut es indefinido',
+              HttpStatus.BAD_REQUEST,
+          );
+        }
+
+        if (!idRole) {
+          throw new HttpException(
+              'Parametro idRole es indefinido',
+              HttpStatus.BAD_REQUEST,
+          );
+        }
+
+        const userByRut = await this.getUserByRut(rut);
+
+        if(userByRut){
+          throw new HttpException(
+            'Parametro rut ya existe',
+            HttpStatus.BAD_REQUEST,
+          )
+        }
+        
+        const userByUsername = await this.getUserByUsername(username);
+
+        if(userByUsername){
+          throw new HttpException(
+            'Parametro username ya existe',
+            HttpStatus.BAD_REQUEST,
+          )
+        }
+
+        const roleById = await this.roleRepository.findOne({
+          where: { id: idRole, deleteAt: null }
         })
+ 
+        if (!roleById) {
+          throw new HttpException(
+              `Role con id ${roleById} no existe`,
+              HttpStatus.BAD_REQUEST, 
+          );
+        }
 
         const user = new Users();
 
         user.username = username;
         user.password = password;
         user.rut = rut;
-        user.role = idr;
+        user.role = roleById;
 
-        return this.userRepository.save(user);
+        await this.userRepository.save(user);
+
+        const userDone = await this.getUserByRut(rut);
+
+        return userDone;
 
     } catch (error) {
         throw error;
@@ -66,43 +137,56 @@ export class UserService {
     }
   }
 
-  // async editUser( id: string, userDataEdit: UserDataEdit ): Promise<Users> {
-  //   try {
+  async editUser( id: string, userDataEdit: UserDataEdit ): Promise<Users> {
+    try {
 
-  //       const user = await this.getUserById(id);
+        const user = await this.getUserById(id);
 
-  //       if (!user) {
-  //           throw new HttpException(`User con id=${id} no existe`, HttpStatus.BAD_REQUEST);
-  //       }
+        if (!user) {
+            throw new HttpException(`User con id=${id} no existe`, HttpStatus.BAD_REQUEST);
+        }
 
-  //       const { username, password } = userDataEdit;
+        const { username, password, rut, idRole } = userDataEdit;
 
-  //       user.username = username;
-  //       user.password = password;
+        const roleById = await this.roleRepository.findOne({
+          where: { id: idRole, deleteAt: null }
+        })
 
-  //       return this.userRepository.save(user);
+        if (!roleById) {
+          throw new HttpException(`Role con id=${idRole} no existe`, HttpStatus.BAD_REQUEST);
+      }
 
-  //   } catch (error) {
-  //       throw error;
-  //   }
-  // }
+        user.username = username;
+        user.password = password;
+        user.rut = rut;
+        user.role = roleById;
 
-  // async deleteUser( id: string ): Promise<Users> {
-  //   try {
+        await this.userRepository.save(user);
 
-  //       const user = await this.getUserById(id);
+        const userEdit = await this.getUserByRut(rut);
 
-  //       if (!user) {
-  //           throw new HttpException(`User con id=${id} no existe`, HttpStatus.BAD_REQUEST);
-  //       }
+        return userEdit;
 
-  //       user.deletedAt = new Date();
+    } catch (error) {
+        throw error;
+    }
+  }
 
-  //       return this.userRepository.save(user);
+  async deleteUser( id: string ): Promise<Users> {
+    try {
+
+        const user = await this.getUserById(id);
+
+        if (!user) {
+            throw new HttpException(`User con id=${id} no existe`, HttpStatus.BAD_REQUEST);
+        }
+
+        user.deletedAt = new Date();
+
+        return this.userRepository.save(user);
         
-  //   } catch (error) {
-  //       throw error;
-  //   }
-  // }
-
+    } catch (error) {
+        throw error;
+    }
+  }
 }

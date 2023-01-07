@@ -29,15 +29,44 @@ export class RoleService {
         throw error;
     }
   }
+
+  async getRoleByName( name: string ): Promise<Roles> {
+    try {
+        return this.roleRepository.findOne({
+            where: { name: name , deleteAt: null }
+        })
+    } catch (error) {
+        throw error;
+    }
+  }
     
   async createRole( roleData: RoleData ): Promise<Role> {
     try {
         const { name } = roleData;
+
+        if (!name) {
+          throw new HttpException(
+              'Parametro nombre es indefinido',
+              HttpStatus.BAD_REQUEST,
+          );
+        }
+ 
+        const roleByName = await this.getRoleByName(name);
+
+        if (roleByName) {
+          throw new HttpException(
+              `Role con nombre ${name} existe`,
+              HttpStatus.BAD_REQUEST, 
+          );
+        }
+
         const role = new Roles();
 
         role.name = name;
 
-        return this.roleRepository.save(role);
+        await this.roleRepository.save(role);
+
+        return role;
 
     } catch (error) {
         throw error;
@@ -51,10 +80,19 @@ export class RoleService {
         const role = await this.getRoleById(id);
 
         if (!role) {
-            throw new HttpException(`role con id=${id} no existe`, HttpStatus.BAD_REQUEST);
+            throw new HttpException(`Role con id=${id} no existe`, HttpStatus.BAD_REQUEST);
         }
 
         const { name } = roleDataEdit;
+
+        const roleByName = await this.getRoleByName(name);
+
+        if(roleByName) {
+          throw new HttpException(
+            `Role con nombre=${name} ya existe`,
+            HttpStatus.BAD_REQUEST
+          );
+        }
 
         role.name = name;
 
