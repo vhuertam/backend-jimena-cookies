@@ -3,6 +3,7 @@ import { Repository } from 'typeorm';
 import { Users } from 'src/entities/user.entity';
 import { User, UserData, UserDataEdit } from 'src/graphql';
 import { Roles } from 'src/entities';
+import { encryptPassword } from 'src/utils/bcrypt';
 
 @Injectable()
 export class UserService {
@@ -60,6 +61,8 @@ export class UserService {
   async createUser( userData: UserData ): Promise<User> {
     try {
         const { username, password, idRole, rut } = userData;
+
+        const [ passwordHash ] = await encryptPassword(password);
 
         if (!rut) {
           throw new HttpException(
@@ -121,7 +124,7 @@ export class UserService {
         const user = new Users();
 
         user.username = username;
-        user.password = password;
+        user.password = passwordHash;
         user.rut = rut;
         user.role = roleById;
 
@@ -146,7 +149,7 @@ export class UserService {
             throw new HttpException(`User con id=${id} no existe`, HttpStatus.BAD_REQUEST);
         }
 
-        const { username, password, rut, idRole } = userDataEdit;
+        const { username, rut, idRole } = userDataEdit;
 
         const roleById = await this.roleRepository.findOne({
           where: { id: idRole, deleteAt: null }
@@ -157,7 +160,6 @@ export class UserService {
       }
 
         user.username = username;
-        user.password = password;
         user.rut = rut;
         user.role = roleById;
 

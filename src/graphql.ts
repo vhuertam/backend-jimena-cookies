@@ -26,7 +26,6 @@ export class UserData {
 export class UserDataEdit {
     rut?: Nullable<string>;
     username?: Nullable<string>;
-    password?: Nullable<string>;
     idRole?: Nullable<string>;
 }
 

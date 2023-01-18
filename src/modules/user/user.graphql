@@ -26,6 +26,5 @@ input UserData {
 input UserDataEdit {
     rut: String,
     username: String,
-    password: String,
     idRole: String
 }
