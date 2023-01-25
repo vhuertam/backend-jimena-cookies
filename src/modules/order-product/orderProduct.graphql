@@ -1,0 +1,21 @@
+type Query {
+    getOrdersProducts: [OrderProduct]
+}
+
+type Mutation {
+    createOrderProduct( input: OrderProductData ): OrderProduct
+    editOrderProduct( id: ID, input: OrderProductData ): OrderProduct
+    deleteOrderProduct( id: ID ): OrderProduct
+}
+
+type OrderProduct {
+    order: Order
+    product: Product
+}
+
+input OrderProductData {
+    idOrder: String
+    idProduct: String
+    idOrderEdit: String
+    idProductEdit: String
+}

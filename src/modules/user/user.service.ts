@@ -126,6 +126,7 @@ export class UserService {
         user.username = username;
         user.password = passwordHash;
         user.rut = rut;
+        user.state = true;
         user.role = roleById;
 
         await this.userRepository.save(user);

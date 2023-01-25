@@ -8,6 +8,39 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export class OrderProductData {
+    idOrder?: Nullable<string>;
+    idProduct?: Nullable<string>;
+    idOrderEdit?: Nullable<string>;
+    idProductEdit?: Nullable<string>;
+}
+
+export class OrderData {
+    client?: Nullable<string>;
+    dateDelivery: Date;
+    hourDelivery?: Nullable<string>;
+    totalPrice?: Nullable<number>;
+    idUser?: Nullable<string>;
+}
+
+export class OrderDataEdit {
+    client?: Nullable<string>;
+    dateDelivery: Date;
+    hourDelivery?: Nullable<string>;
+    totalPrice?: Nullable<number>;
+    idUser?: Nullable<string>;
+}
+
+export class ProductData {
+    name?: Nullable<string>;
+    idRecipe?: Nullable<string>;
+}
+
+export class ProductDataEdit {
+    name?: Nullable<string>;
+    idRecipe?: Nullable<string>;
+}
+
 export class RoleData {
     name?: Nullable<string>;
 }
@@ -30,12 +63,36 @@ export class UserDataEdit {
 }
 
 export abstract class IQuery {
+    abstract getOrdersProducts(): Nullable<Nullable<OrderProduct>[]> | Promise<Nullable<Nullable<OrderProduct>[]>>;
+
+    abstract getOrders(): Nullable<Nullable<Order>[]> | Promise<Nullable<Nullable<Order>[]>>;
+
+    abstract getProducts(): Nullable<Nullable<Product>[]> | Promise<Nullable<Nullable<Product>[]>>;
+
     abstract getRoles(): Nullable<Nullable<Role>[]> | Promise<Nullable<Nullable<Role>[]>>;
 
     abstract getUsers(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
 }
 
 export abstract class IMutation {
+    abstract createOrderProduct(input?: Nullable<OrderProductData>): Nullable<OrderProduct> | Promise<Nullable<OrderProduct>>;
+
+    abstract editOrderProduct(id?: Nullable<string>, input?: Nullable<OrderProductData>): Nullable<OrderProduct> | Promise<Nullable<OrderProduct>>;
+
+    abstract deleteOrderProduct(id?: Nullable<string>): Nullable<OrderProduct> | Promise<Nullable<OrderProduct>>;
+
+    abstract createOrder(input?: Nullable<OrderData>): Nullable<Order> | Promise<Nullable<Order>>;
+
+    abstract editOrder(id?: Nullable<string>, input?: Nullable<OrderDataEdit>): Nullable<Order> | Promise<Nullable<Order>>;
+
+    abstract deleteOrder(id?: Nullable<string>): Nullable<Order> | Promise<Nullable<Order>>;
+
+    abstract createProduct(input?: Nullable<ProductData>): Nullable<Product> | Promise<Nullable<Product>>;
+
+    abstract editProduct(id?: Nullable<string>, input?: Nullable<ProductDataEdit>): Nullable<Product> | Promise<Nullable<Product>>;
+
+    abstract deleteProduct(id?: Nullable<string>): Nullable<Product> | Promise<Nullable<Product>>;
+
     abstract createRole(input?: Nullable<RoleData>): Nullable<Role> | Promise<Nullable<Role>>;
 
     abstract editRole(id?: Nullable<string>, input?: Nullable<RoleDataEdit>): Nullable<Role> | Promise<Nullable<Role>>;
@@ -49,6 +106,25 @@ export abstract class IMutation {
     abstract deleteUser(id?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
 }
 
+export class OrderProduct {
+    order?: Nullable<Order>;
+    product?: Nullable<Product>;
+}
+
+export class Order {
+    id: string;
+    client?: Nullable<string>;
+    dateDelivery?: Nullable<Date>;
+    hourDelivery?: Nullable<string>;
+    totalPrice?: Nullable<number>;
+    user?: Nullable<User>;
+}
+
+export class Product {
+    id: string;
+    name?: Nullable<string>;
+}
+
 export class Role {
     id: string;
     name?: Nullable<string>;
@@ -59,6 +135,7 @@ export class User {
     rut?: Nullable<string>;
     username?: Nullable<string>;
     password?: Nullable<string>;
+    state?: Nullable<boolean>;
     role?: Nullable<Role>;
 }
 

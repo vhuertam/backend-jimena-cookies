@@ -1,2 +1,5 @@
 export { Roles } from './role.entity' 
 export { Users } from './user.entity' 
+export { Orders } from './order.entity' 
+export { Products } from './product.entity' 
+export { OrdersProducts } from './order_product.entity' 

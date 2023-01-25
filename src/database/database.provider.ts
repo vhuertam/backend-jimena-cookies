@@ -1,4 +1,7 @@
 import { 
+  Orders,
+  OrdersProducts,
+  Products,
   Roles,
   Users
 } from '../entities'
@@ -20,7 +23,10 @@ const dataSource = new DataSource({
   database: DB_NAME,
   entities: [
     Users,
-    Roles
+    Roles,
+    Orders,
+    Products,
+    OrdersProducts
 ],
   synchronize: true,
 });

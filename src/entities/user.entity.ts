@@ -15,6 +15,9 @@ export class Users {
   @Column({name: 'password', type: 'text', nullable: true})
   password: string;
 
+  @Column({name: 'state', type: 'boolean', nullable: true})
+  state: boolean;
+
   @CreateDateColumn({ name: 'created_at', type: 'timestamp', default: 'NOW' })
   createdAt: Date
 
