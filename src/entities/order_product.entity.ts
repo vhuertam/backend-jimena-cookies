@@ -4,6 +4,7 @@ import { Products } from './product.entity';
 
 @Entity()
 export class OrdersProducts {
+    
     @Column({ name: 'id_order', type: 'uuid', primary: true })
     @JoinColumn({ name: 'id_order'})
     @ManyToOne(() => Orders)

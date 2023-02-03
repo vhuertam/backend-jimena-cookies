@@ -28,7 +28,12 @@ export class Orders {
   @DeleteDateColumn({ name: 'delete_at', type: 'timestamp' })
   deleteAt: Date
 
+  @Column({ name: 'id_user', type: 'uuid', nullable: true})
+  @JoinColumn({ name: 'id_user' })
+  @ManyToOne(() => Users)
+  user: Users
+
   @OneToMany(() => OrdersProducts, (orderProduct) => orderProduct.order)
-    orderProduct: OrdersProducts[]
+  orderProduct: OrdersProducts[]
 
 }
