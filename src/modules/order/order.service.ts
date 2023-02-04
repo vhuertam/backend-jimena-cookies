@@ -136,6 +136,7 @@ export class OrderService {
         const { client, dateDelivery, hourDelivery, idUser, totalPrice } = OrderDataEdit;
 
         const userById = await this.userRepository.findOne({
+            relations: ['role'],
             where:{ id: idUser, deletedAt: null }
         })
 
@@ -170,6 +171,3 @@ export class OrderService {
     }
   }
 }
-
-
-
