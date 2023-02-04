@@ -17,7 +17,7 @@ export class OrderProductData {
 
 export class OrderData {
     client?: Nullable<string>;
-    dateDelivery: Date;
+    dateDelivery?: Nullable<string>;
     hourDelivery?: Nullable<string>;
     totalPrice?: Nullable<number>;
     idUser?: Nullable<string>;
@@ -25,7 +25,7 @@ export class OrderData {
 
 export class OrderDataEdit {
     client?: Nullable<string>;
-    dateDelivery: Date;
+    dateDelivery?: Nullable<string>;
     hourDelivery?: Nullable<string>;
     totalPrice?: Nullable<number>;
     idUser?: Nullable<string>;
@@ -114,7 +114,7 @@ export class OrderProduct {
 export class Order {
     id: string;
     client?: Nullable<string>;
-    dateDelivery?: Nullable<Date>;
+    dateDelivery?: Nullable<string>;
     hourDelivery?: Nullable<string>;
     totalPrice?: Nullable<number>;
     user?: Nullable<User>;

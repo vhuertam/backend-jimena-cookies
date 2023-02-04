@@ -13,7 +13,7 @@ type Mutation {
 type Order {
     id: ID!,
     client: String,
-    dateDelivery: Date,
+    dateDelivery: String,
     hourDelivery: String,
     totalPrice: Float,
     user: User
@@ -21,7 +21,7 @@ type Order {
 
 input OrderData {
     client: String,
-    dateDelivery: Date!
+    dateDelivery: String,
     hourDelivery: String,
     totalPrice: Float,
     idUser: String
@@ -29,7 +29,7 @@ input OrderData {
 
 input OrderDataEdit {
     client: String,
-    dateDelivery: Date!
+    dateDelivery: String,
     hourDelivery: String,
     totalPrice: Float,
     idUser: String

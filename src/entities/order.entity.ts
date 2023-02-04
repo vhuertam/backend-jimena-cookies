@@ -10,8 +10,8 @@ export class Orders {
   @Column({ name: 'client', type: 'text', nullable: true })
   client: string;
 
-  @Column({ name: 'date_delivery', type: 'timestamp', nullable: true })
-  dateDelivery: Date;
+  @Column({ name: 'date_delivery', type: 'text', nullable: true })
+  dateDelivery: string;
 
   @Column({ name: 'hour_delivery', type: 'text', nullable: true })
   hourDelivery: string;

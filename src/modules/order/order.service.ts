@@ -15,7 +15,7 @@ export class OrderService {
   async getOrders(): Promise<Orders[]> {
     try {
         return this.orderRepository.find({
-            relations: ['user'],
+            relations: ['user', 'user.role'],
             where: { deleteAt: null }
         });
     } catch (error) {
@@ -26,7 +26,7 @@ export class OrderService {
   async getOrderById( id: string ): Promise<Orders> {
     try {
         return this.orderRepository.findOne({
-            relations: ['user'],
+            relations: ['user', 'user.role'],
             where: { id: id, deleteAt: null }
         })
     } catch (error) {
@@ -37,7 +37,7 @@ export class OrderService {
   async getOrderByClient( client: string ): Promise<Orders> {
     try {
         return this.orderRepository.findOne({
-            relations: ['user'],
+            relations: ['user', 'user.role'],
             where: { client: client , deleteAt: null }
         })
     } catch (error) {
