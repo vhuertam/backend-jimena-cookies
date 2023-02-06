@@ -21,7 +21,7 @@ export class RecipeService {
         }
     }
 
-    async getRecipesById( id: string ): Promise<Recipes> {
+    async getRecipeById( id: string ): Promise<Recipes> {
         try {
             return this.recipeRepository.findOne({
                 where: { id: id, deleteAt: null }
@@ -50,7 +50,7 @@ export class RecipeService {
 
             await this.recipeRepository.save(recipe);
 
-            const recipeDone = await this.getRecipesById(recipe.id);
+            const recipeDone = await this.getRecipeById(recipe.id);
 
             return recipeDone;
 
@@ -62,7 +62,7 @@ export class RecipeService {
     async editRecipe( id: string, recipeDataEdit: RecipeDataEdit ): Promise<Recipes> {
         try {
 
-            const recipe = await this.getRecipesById(id);
+            const recipe = await this.getRecipeById(id);
 
             if(!recipe) {
                 throw new HttpException(
@@ -77,7 +77,7 @@ export class RecipeService {
             
             await this.recipeRepository.save(recipe);
 
-            const recipeEdit = await this.getRecipesById(id);
+            const recipeEdit = await this.getRecipeById(id);
 
             return recipeEdit;
             
@@ -88,7 +88,7 @@ export class RecipeService {
 
     async deleteRecipe( id: string ): Promise<Recipes> {
 
-        const recipe = await this.getRecipesById(id);
+        const recipe = await this.getRecipeById(id);
 
         if(!recipe) {
             throw new HttpException(
@@ -99,10 +99,7 @@ export class RecipeService {
 
         recipe.deleteAt = new Date();
 
-        await this.recipeRepository.save(recipe);
+        return this.recipeRepository.save(recipe);
 
-        const recipeDone = this.getRecipesById(id);
-
-        return recipeDone;
     }
 }

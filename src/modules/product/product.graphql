@@ -11,6 +11,7 @@ type Mutation {
 type Product {
     id: ID!,
     name: String
+    recipe: Recipe
 }
 
 input ProductData {

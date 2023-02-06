@@ -139,6 +139,7 @@ export class Order {
 export class Product {
     id: string;
     name?: Nullable<string>;
+    recipe?: Nullable<Recipe>;
 }
 
 export class Recipe {
