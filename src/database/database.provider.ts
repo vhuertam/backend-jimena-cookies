@@ -2,6 +2,7 @@ import {
   Orders,
   OrdersProducts,
   Products,
+  Recipes,
   Roles,
   Users
 } from '../entities'
@@ -26,7 +27,8 @@ const dataSource = new DataSource({
     Roles,
     Orders,
     Products,
-    OrdersProducts
+    OrdersProducts,
+    Recipes,
 ],
   synchronize: true,
 });

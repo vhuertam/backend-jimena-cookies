@@ -45,9 +45,9 @@ export class OrderService {
     }
   }
     
-  async createOrder( OrderData: OrderData ): Promise<Order> {
+  async createOrder( orderData: OrderData ): Promise<Order> {
     try {
-        const { client, dateDelivery, hourDelivery, idUser, totalPrice } = OrderData;
+        const { client, dateDelivery, hourDelivery, idUser, totalPrice } = orderData;
 
         if (!client) {
           throw new HttpException(

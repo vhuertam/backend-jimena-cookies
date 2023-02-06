@@ -9,6 +9,9 @@ import { ProductModule } from './modules/product/product.module';
 import { OrderProductResolver } from './modules/order-product/order-product.resolver';
 import { OrderProductService } from './modules/order-product/order-product.service';
 import { OrderProductModule } from './modules/order-product/order-product.module';
+import { RecipeResolver } from './modules/recipe/recipe.resolver';
+import { RecipeService } from './modules/recipe/recipe.service';
+import { RecipeModule } from './modules/recipe/recipe.module';
 
 @Module({
   imports: [
@@ -18,7 +21,8 @@ import { OrderProductModule } from './modules/order-product/order-product.module
     RoleModule,
     OrderModule,
     ProductModule,
-    OrderProductModule
+    OrderProductModule,
+    RecipeModule
   ],
   controllers: [],
   providers: [],

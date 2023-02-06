@@ -41,6 +41,14 @@ export class ProductDataEdit {
     idRecipe?: Nullable<string>;
 }
 
+export class RecipeData {
+    description?: Nullable<string>;
+}
+
+export class RecipeDataEdit {
+    description?: Nullable<string>;
+}
+
 export class RoleData {
     name?: Nullable<string>;
 }
@@ -69,6 +77,8 @@ export abstract class IQuery {
 
     abstract getProducts(): Nullable<Nullable<Product>[]> | Promise<Nullable<Nullable<Product>[]>>;
 
+    abstract getRecipes(): Nullable<Nullable<Recipe>[]> | Promise<Nullable<Nullable<Recipe>[]>>;
+
     abstract getRoles(): Nullable<Nullable<Role>[]> | Promise<Nullable<Nullable<Role>[]>>;
 
     abstract getUsers(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
@@ -92,6 +102,12 @@ export abstract class IMutation {
     abstract editProduct(id?: Nullable<string>, input?: Nullable<ProductDataEdit>): Nullable<Product> | Promise<Nullable<Product>>;
 
     abstract deleteProduct(id?: Nullable<string>): Nullable<Product> | Promise<Nullable<Product>>;
+
+    abstract createRecipe(input?: Nullable<RecipeData>): Nullable<Recipe> | Promise<Nullable<Recipe>>;
+
+    abstract editRecipe(id?: Nullable<string>, input?: Nullable<RecipeDataEdit>): Nullable<Recipe> | Promise<Nullable<Recipe>>;
+
+    abstract deleteRecipe(id?: Nullable<string>): Nullable<Recipe> | Promise<Nullable<Recipe>>;
 
     abstract createRole(input?: Nullable<RoleData>): Nullable<Role> | Promise<Nullable<Role>>;
 
@@ -123,6 +139,11 @@ export class Order {
 export class Product {
     id: string;
     name?: Nullable<string>;
+}
+
+export class Recipe {
+    id: string;
+    description?: Nullable<string>;
 }
 
 export class Role {
