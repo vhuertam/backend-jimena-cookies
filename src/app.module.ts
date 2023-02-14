@@ -7,6 +7,7 @@ import { OrderModule } from './modules/order/order.module';
 import { ProductModule } from './modules/product/product.module';
 import { OrderProductModule } from './modules/order-product/order-product.module';
 import { RecipeModule } from './modules/recipe/recipe.module';
+import { PriceSizeModule } from './modules/price-size/price-size.module';
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { RecipeModule } from './modules/recipe/recipe.module';
     OrderModule,
     ProductModule,
     OrderProductModule,
-    RecipeModule
+    RecipeModule,
+    PriceSizeModule,
   ],
   controllers: [],
   providers: [],

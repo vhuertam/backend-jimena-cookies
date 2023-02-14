@@ -31,6 +31,18 @@ export class OrderDataEdit {
     idUser?: Nullable<string>;
 }
 
+export class PriceSizeData {
+    price?: Nullable<number>;
+    size?: Nullable<string>;
+    idProduct?: Nullable<string>;
+}
+
+export class PriceSizeDataEdit {
+    price?: Nullable<number>;
+    size?: Nullable<string>;
+    idProduct?: Nullable<string>;
+}
+
 export class ProductData {
     name?: Nullable<string>;
     idRecipe?: Nullable<string>;
@@ -75,6 +87,8 @@ export abstract class IQuery {
 
     abstract getOrders(): Nullable<Nullable<Order>[]> | Promise<Nullable<Nullable<Order>[]>>;
 
+    abstract getPricesSizes(): Nullable<Nullable<PriceSize>[]> | Promise<Nullable<Nullable<PriceSize>[]>>;
+
     abstract getProducts(): Nullable<Nullable<Product>[]> | Promise<Nullable<Nullable<Product>[]>>;
 
     abstract getRecipes(): Nullable<Nullable<Recipe>[]> | Promise<Nullable<Nullable<Recipe>[]>>;
@@ -96,6 +110,12 @@ export abstract class IMutation {
     abstract editOrder(id?: Nullable<string>, input?: Nullable<OrderDataEdit>): Nullable<Order> | Promise<Nullable<Order>>;
 
     abstract deleteOrder(id?: Nullable<string>): Nullable<Order> | Promise<Nullable<Order>>;
+
+    abstract createPriceSize(input?: Nullable<PriceSizeData>): Nullable<PriceSize> | Promise<Nullable<PriceSize>>;
+
+    abstract editPriceSize(id?: Nullable<string>, input?: Nullable<PriceSizeDataEdit>): Nullable<PriceSize> | Promise<Nullable<PriceSize>>;
+
+    abstract deletePriceSize(id?: Nullable<string>): Nullable<PriceSize> | Promise<Nullable<PriceSize>>;
 
     abstract createProduct(input?: Nullable<ProductData>): Nullable<Product> | Promise<Nullable<Product>>;
 
@@ -134,6 +154,13 @@ export class Order {
     hourDelivery?: Nullable<string>;
     totalPrice?: Nullable<number>;
     user?: Nullable<User>;
+}
+
+export class PriceSize {
+    id: string;
+    price?: Nullable<number>;
+    size?: Nullable<string>;
+    product?: Nullable<Product>;
 }
 
 export class Product {

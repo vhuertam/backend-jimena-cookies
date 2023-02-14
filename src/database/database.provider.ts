@@ -1,6 +1,7 @@
 import { 
   Orders,
   OrdersProducts,
+  PricesSizes,
   Products,
   Recipes,
   Roles,
@@ -29,6 +30,7 @@ const dataSource = new DataSource({
     Products,
     OrdersProducts,
     Recipes,
+    PricesSizes,
 ],
   synchronize: true,
 });
