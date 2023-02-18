@@ -6,7 +6,8 @@ import {
   Recipes,
   Roles,
   Subrecipes,
-  Users
+  Users,
+  Ingredients,
 } from '../entities'
 
 import { DataSource } from 'typeorm';
@@ -33,6 +34,7 @@ const dataSource = new DataSource({
     Recipes,
     PricesSizes,
     Subrecipes,
+    Ingredients,
 ],
   synchronize: true,
 });

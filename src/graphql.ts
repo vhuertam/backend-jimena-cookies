@@ -8,6 +8,16 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export class IngredientData {
+    name?: Nullable<string>;
+    quantity?: Nullable<string>;
+}
+
+export class IngredientDataEdit {
+    name?: Nullable<string>;
+    quantity?: Nullable<string>;
+}
+
 export class OrderProductData {
     idOrder?: Nullable<string>;
     idProduct?: Nullable<string>;
@@ -91,6 +101,8 @@ export class UserDataEdit {
 }
 
 export abstract class IQuery {
+    abstract getIngredients(): Nullable<Nullable<Ingredient>[]> | Promise<Nullable<Nullable<Ingredient>[]>>;
+
     abstract getOrdersProducts(): Nullable<Nullable<OrderProduct>[]> | Promise<Nullable<Nullable<OrderProduct>[]>>;
 
     abstract getOrders(): Nullable<Nullable<Order>[]> | Promise<Nullable<Nullable<Order>[]>>;
@@ -109,6 +121,12 @@ export abstract class IQuery {
 }
 
 export abstract class IMutation {
+    abstract createIngredient(input?: Nullable<IngredientData>): Nullable<Ingredient> | Promise<Nullable<Ingredient>>;
+
+    abstract editIngredient(id?: Nullable<string>, input?: Nullable<IngredientDataEdit>): Nullable<Ingredient> | Promise<Nullable<Ingredient>>;
+
+    abstract deleteIngredient(id?: Nullable<string>): Nullable<Ingredient> | Promise<Nullable<Ingredient>>;
+
     abstract createOrderProduct(input?: Nullable<OrderProductData>): Nullable<OrderProduct> | Promise<Nullable<OrderProduct>>;
 
     abstract editOrderProduct(id?: Nullable<string>, input?: Nullable<OrderProductData>): Nullable<OrderProduct> | Promise<Nullable<OrderProduct>>;
@@ -156,6 +174,12 @@ export abstract class IMutation {
     abstract editUser(id?: Nullable<string>, input?: Nullable<UserDataEdit>): Nullable<User> | Promise<Nullable<User>>;
 
     abstract deleteUser(id?: Nullable<string>): Nullable<User> | Promise<Nullable<User>>;
+}
+
+export class Ingredient {
+    id: string;
+    name?: Nullable<string>;
+    quantity?: Nullable<string>;
 }
 
 export class OrderProduct {
