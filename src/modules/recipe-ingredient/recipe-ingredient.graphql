@@ -1,0 +1,21 @@
+type Query {
+    getRecipesIngredients: [RecipeIngredient]
+}
+
+type Mutation {
+    createRecipeIngredient( input: RecipeIngredientData ): RecipeIngredient
+    editRecipeIngredient( id: ID, input: RecipeIngredientData ): RecipeIngredient
+    deleteRecipeIngredient( id: ID ): RecipeIngredient
+}
+
+type RecipeIngredient {
+    recipe: Recipe
+    ingredient: Ingredient
+}
+
+input RecipeIngredientData {
+    idRecipe: String
+    idIngredient: String
+    idRecipeEdit: String
+    idIngredientEdit: String
+}

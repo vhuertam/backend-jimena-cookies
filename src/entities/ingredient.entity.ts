@@ -1,4 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, UpdateDateColumn, CreateDateColumn, DeleteDateColumn, JoinColumn, ManyToOne, OneToMany, OneToOne } from 'typeorm';
+import { RecipesIngredients } from './recipe_ingredient.entity';
+import { SubrecipesIngredients } from './subrecipe_ingredient.entity';
 
 @Entity()
 export class Ingredients {
@@ -19,5 +21,11 @@ export class Ingredients {
   
   @DeleteDateColumn({ name: 'delete_at', type: 'timestamp' })
   deletedAt: Date
+
+  @OneToMany(() => RecipesIngredients, (recipeIngredient) => recipeIngredient.ingredient)
+  recipeIngredient: RecipesIngredients[]
+  
+  @OneToMany(() => SubrecipesIngredients, (subrecipeIngredient) => subrecipeIngredient.ingredient)
+  subrecipeIngredient: SubrecipesIngredients[]
 
 }

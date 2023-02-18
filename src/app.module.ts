@@ -10,6 +10,9 @@ import { RecipeModule } from './modules/recipe/recipe.module';
 import { PriceSizeModule } from './modules/price-size/price-size.module';
 import { SubrecipeModule } from './modules/subrecipe/subrecipe.module';
 import { IngredientModule } from './modules/ingredient/ingredient.module';
+import { RecipeSubrecipeModule } from './modules/recipe-subrecipe/recipe-subrecipe.module';
+import { RecipeIngredientModule } from './modules/recipe-ingredient/recipe-ingredient.module';
+import { SubrecipeIngredientModule } from './modules/subrecipe-ingredient/subrecipe-ingredient.module';
 
 @Module({
   imports: [
@@ -24,6 +27,9 @@ import { IngredientModule } from './modules/ingredient/ingredient.module';
     PriceSizeModule,
     SubrecipeModule,
     IngredientModule,
+    RecipeSubrecipeModule,
+    RecipeIngredientModule,
+    SubrecipeIngredientModule,
   ],
   controllers: [],
   providers: [],

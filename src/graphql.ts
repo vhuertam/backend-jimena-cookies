@@ -63,6 +63,20 @@ export class ProductDataEdit {
     idRecipe?: Nullable<string>;
 }
 
+export class RecipeIngredientData {
+    idRecipe?: Nullable<string>;
+    idIngredient?: Nullable<string>;
+    idRecipeEdit?: Nullable<string>;
+    idIngredientEdit?: Nullable<string>;
+}
+
+export class RecipeSubrecipeData {
+    idRecipe?: Nullable<string>;
+    idSubrecipe?: Nullable<string>;
+    idRecipeEdit?: Nullable<string>;
+    idSubrecipeEdit?: Nullable<string>;
+}
+
 export class RecipeData {
     description?: Nullable<string>;
 }
@@ -77,6 +91,13 @@ export class RoleData {
 
 export class RoleDataEdit {
     name?: Nullable<string>;
+}
+
+export class SubrecipeIngredientData {
+    idSubrecipe?: Nullable<string>;
+    idIngredient?: Nullable<string>;
+    idSubrecipeEdit?: Nullable<string>;
+    idIngredientEdit?: Nullable<string>;
 }
 
 export class SubrecipeData {
@@ -111,9 +132,15 @@ export abstract class IQuery {
 
     abstract getProducts(): Nullable<Nullable<Product>[]> | Promise<Nullable<Nullable<Product>[]>>;
 
+    abstract getRecipesIngredients(): Nullable<Nullable<RecipeIngredient>[]> | Promise<Nullable<Nullable<RecipeIngredient>[]>>;
+
+    abstract getRecipeSubrecipes(): Nullable<Nullable<RecipeSubrecipe>[]> | Promise<Nullable<Nullable<RecipeSubrecipe>[]>>;
+
     abstract getRecipes(): Nullable<Nullable<Recipe>[]> | Promise<Nullable<Nullable<Recipe>[]>>;
 
     abstract getRoles(): Nullable<Nullable<Role>[]> | Promise<Nullable<Nullable<Role>[]>>;
+
+    abstract getSubrecipesIngredients(): Nullable<Nullable<SubrecipeIngredient>[]> | Promise<Nullable<Nullable<SubrecipeIngredient>[]>>;
 
     abstract getSubrecipes(): Nullable<Nullable<Subrecipe>[]> | Promise<Nullable<Nullable<Subrecipe>[]>>;
 
@@ -151,6 +178,18 @@ export abstract class IMutation {
 
     abstract deleteProduct(id?: Nullable<string>): Nullable<Product> | Promise<Nullable<Product>>;
 
+    abstract createRecipeIngredient(input?: Nullable<RecipeIngredientData>): Nullable<RecipeIngredient> | Promise<Nullable<RecipeIngredient>>;
+
+    abstract editRecipeIngredient(id?: Nullable<string>, input?: Nullable<RecipeIngredientData>): Nullable<RecipeIngredient> | Promise<Nullable<RecipeIngredient>>;
+
+    abstract deleteRecipeIngredient(id?: Nullable<string>): Nullable<RecipeIngredient> | Promise<Nullable<RecipeIngredient>>;
+
+    abstract createRecipeSubrecipe(input?: Nullable<RecipeSubrecipeData>): Nullable<RecipeSubrecipe> | Promise<Nullable<RecipeSubrecipe>>;
+
+    abstract editRecipeSubrecipe(id?: Nullable<string>, input?: Nullable<RecipeSubrecipeData>): Nullable<RecipeSubrecipe> | Promise<Nullable<RecipeSubrecipe>>;
+
+    abstract deleteRecipeSubrecipe(id?: Nullable<string>): Nullable<RecipeSubrecipe> | Promise<Nullable<RecipeSubrecipe>>;
+
     abstract createRecipe(input?: Nullable<RecipeData>): Nullable<Recipe> | Promise<Nullable<Recipe>>;
 
     abstract editRecipe(id?: Nullable<string>, input?: Nullable<RecipeDataEdit>): Nullable<Recipe> | Promise<Nullable<Recipe>>;
@@ -162,6 +201,12 @@ export abstract class IMutation {
     abstract editRole(id?: Nullable<string>, input?: Nullable<RoleDataEdit>): Nullable<Role> | Promise<Nullable<Role>>;
 
     abstract deleteRole(id?: Nullable<string>): Nullable<Role> | Promise<Nullable<Role>>;
+
+    abstract createSubrecipeIngredient(input?: Nullable<SubrecipeIngredientData>): Nullable<SubrecipeIngredient> | Promise<Nullable<SubrecipeIngredient>>;
+
+    abstract editSubrecipeIngredient(id?: Nullable<string>, input?: Nullable<SubrecipeIngredientData>): Nullable<SubrecipeIngredient> | Promise<Nullable<SubrecipeIngredient>>;
+
+    abstract deleteSubrecipeIngredient(id?: Nullable<string>): Nullable<SubrecipeIngredient> | Promise<Nullable<SubrecipeIngredient>>;
 
     abstract createSubrecipe(input?: Nullable<SubrecipeData>): Nullable<Subrecipe> | Promise<Nullable<Subrecipe>>;
 
@@ -209,6 +254,16 @@ export class Product {
     recipe?: Nullable<Recipe>;
 }
 
+export class RecipeIngredient {
+    recipe?: Nullable<Recipe>;
+    ingredient?: Nullable<Ingredient>;
+}
+
+export class RecipeSubrecipe {
+    recipe?: Nullable<Recipe>;
+    subrecipe?: Nullable<Subrecipe>;
+}
+
 export class Recipe {
     id: string;
     description?: Nullable<string>;
@@ -217,6 +272,11 @@ export class Recipe {
 export class Role {
     id: string;
     name?: Nullable<string>;
+}
+
+export class SubrecipeIngredient {
+    subrecipe?: Nullable<Subrecipe>;
+    ingredient?: Nullable<Ingredient>;
 }
 
 export class Subrecipe {
