@@ -5,6 +5,7 @@ import {
   Products,
   Recipes,
   Roles,
+  Subrecipes,
   Users
 } from '../entities'
 
@@ -31,6 +32,7 @@ const dataSource = new DataSource({
     OrdersProducts,
     Recipes,
     PricesSizes,
+    Subrecipes,
 ],
   synchronize: true,
 });

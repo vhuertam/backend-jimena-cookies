@@ -69,6 +69,14 @@ export class RoleDataEdit {
     name?: Nullable<string>;
 }
 
+export class SubrecipeData {
+    description?: Nullable<string>;
+}
+
+export class SubrecipeDataEdit {
+    description?: Nullable<string>;
+}
+
 export class UserData {
     rut?: Nullable<string>;
     username?: Nullable<string>;
@@ -94,6 +102,8 @@ export abstract class IQuery {
     abstract getRecipes(): Nullable<Nullable<Recipe>[]> | Promise<Nullable<Nullable<Recipe>[]>>;
 
     abstract getRoles(): Nullable<Nullable<Role>[]> | Promise<Nullable<Nullable<Role>[]>>;
+
+    abstract getSubrecipes(): Nullable<Nullable<Subrecipe>[]> | Promise<Nullable<Nullable<Subrecipe>[]>>;
 
     abstract getUsers(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
 }
@@ -134,6 +144,12 @@ export abstract class IMutation {
     abstract editRole(id?: Nullable<string>, input?: Nullable<RoleDataEdit>): Nullable<Role> | Promise<Nullable<Role>>;
 
     abstract deleteRole(id?: Nullable<string>): Nullable<Role> | Promise<Nullable<Role>>;
+
+    abstract createSubrecipe(input?: Nullable<SubrecipeData>): Nullable<Subrecipe> | Promise<Nullable<Subrecipe>>;
+
+    abstract editSubrecipe(id?: Nullable<string>, input?: Nullable<SubrecipeDataEdit>): Nullable<Subrecipe> | Promise<Nullable<Subrecipe>>;
+
+    abstract deleteSubrecipe(id?: Nullable<string>): Nullable<Subrecipe> | Promise<Nullable<Subrecipe>>;
 
     abstract createUser(input?: Nullable<UserData>): Nullable<User> | Promise<Nullable<User>>;
 
@@ -177,6 +193,11 @@ export class Recipe {
 export class Role {
     id: string;
     name?: Nullable<string>;
+}
+
+export class Subrecipe {
+    id: string;
+    description?: Nullable<string>;
 }
 
 export class User {
