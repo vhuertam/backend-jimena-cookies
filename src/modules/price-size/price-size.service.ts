@@ -16,7 +16,7 @@ export class PriceSizeService {
     try {
         return this.priceSizeRepository.find({
             relations: ['product', 'product.recipe'],
-            where: { deleteAt: null }
+            where: { }
         });
     } catch (error) {
         throw error;        
@@ -27,7 +27,7 @@ export class PriceSizeService {
     try {
         return this.priceSizeRepository.findOne({
             relations: ['product', 'product.recipe'],
-            where: { id: id, deleteAt: null }
+            where: { id: id }
         })
     } catch (error) {
         throw error;
@@ -71,7 +71,7 @@ export class PriceSizeService {
 
         const productById = await this.productRepository.findOne({
             relations:[ 'recipe' ],
-            where:{ id: idProduct, deleteAt: null }
+            where:{ id: idProduct }
         });
 
         if (!productById) {
@@ -112,7 +112,7 @@ export class PriceSizeService {
 
         const productById = await this.productRepository.findOne({
             relations: ['recipe'],
-            where:{ id: idProduct, deleteAt: null }
+            where:{ id: idProduct }
         })
 
         priceSize.price = price;
@@ -135,9 +135,7 @@ export class PriceSizeService {
             throw new HttpException(`PriceSize con id=${id} no existe`, HttpStatus.BAD_REQUEST);
         }
 
-        priceSize.deleteAt = new Date();
-
-        return this.priceSizeRepository.save(priceSize);
+        return this.priceSizeRepository.remove(priceSize);
         
     } catch (error) {
         throw error;

@@ -16,7 +16,7 @@ export class OrderService {
     try {
         return this.orderRepository.find({
             relations: ['user', 'user.role'],
-            where: { deleteAt: null }
+            where: {  }
         });
     } catch (error) {
         throw error;        
@@ -27,7 +27,7 @@ export class OrderService {
     try {
         return this.orderRepository.findOne({
             relations: ['user', 'user.role'],
-            where: { id: id, deleteAt: null }
+            where: { id: id }
         })
     } catch (error) {
         throw error;
@@ -38,7 +38,7 @@ export class OrderService {
     try {
         return this.orderRepository.findOne({
             relations: ['user', 'user.role'],
-            where: { client: client , deleteAt: null }
+            where: { client: client }
         })
     } catch (error) {
         throw error;
@@ -162,9 +162,9 @@ export class OrderService {
             throw new HttpException(`Order con id=${id} no existe`, HttpStatus.BAD_REQUEST);
         }
 
-        order.deleteAt = new Date();
+        await this.orderRepository.remove(order);
 
-        return this.orderRepository.save(order);
+        return;
         
     } catch (error) {
         throw error;

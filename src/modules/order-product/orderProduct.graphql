@@ -4,8 +4,8 @@ type Query {
 
 type Mutation {
     createOrderProduct( input: OrderProductData ): OrderProduct
-    editOrderProduct( id: ID, input: OrderProductData ): OrderProduct
-    deleteOrderProduct( id: ID ): OrderProduct
+    editOrderProduct( id_ord: ID, id_pro: ID, input: OrderProductDataEdit ): OrderProduct
+    deleteOrderProduct( id_ord: ID, id_pro: ID ): OrderProduct
 }
 
 type OrderProduct {
@@ -16,6 +16,9 @@ type OrderProduct {
 input OrderProductData {
     idOrder: String
     idProduct: String
-    idOrderEdit: String
-    idProductEdit: String
+}
+
+input OrderProductDataEdit {
+    idOrder: String
+    idProduct: String
 }

@@ -16,7 +16,7 @@ export class ProductService {
         try {
             return this.productRepository.find({
                 relations: ['recipe'],
-                where: { deleteAt: null }
+                where: { }
             });
             
         } catch (error) {
@@ -28,7 +28,7 @@ export class ProductService {
         try {
             return this.productRepository.findOne({
                 relations: ['recipe'],
-                where: { id: id, deleteAt: null }
+                where: { id: id }
             });
             
         } catch (error) {
@@ -56,7 +56,7 @@ export class ProductService {
             }
 
             const recipe = await this.recipeRepository.findOne({
-                where: { id: idRecipe, deleteAt: null }
+                where: { id: idRecipe }
             })
 
             if(!recipe){
@@ -97,7 +97,7 @@ export class ProductService {
             const { name, idRecipe } = productDataEdit;
 
             const recipe = await this.recipeRepository.findOne({
-                where: { id: idRecipe, deleteAt: null }
+                where: { id: idRecipe }
             })
 
             if(!recipe){
@@ -132,9 +132,9 @@ export class ProductService {
             )
         }
 
-        product.deleteAt = new Date();
+        await this.productRepository.remove(product);
 
-        return this.productRepository.save(product);
+        return;
 
     }
 }

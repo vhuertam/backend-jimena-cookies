@@ -11,15 +11,6 @@ export class Recipes {
   @Column({ name: 'description', type: 'text', nullable: true })
   description: string;
 
-  @CreateDateColumn({ name: 'create_at', type: 'timestamp', default: 'NOW' })
-  createAt: Date
-
-  @UpdateDateColumn({ name: 'update_at', type: 'timestamp' })
-  updateAt: Date
-  
-  @DeleteDateColumn({ name: 'delete_at', type: 'timestamp' })
-  deleteAt: Date
-
   @OneToOne(() => Products, (product) => product.recipe)
   product: Products
 

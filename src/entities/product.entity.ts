@@ -11,23 +11,17 @@ export class Products {
   @Column({ name: 'name', type: 'text', nullable: true })
   name: string;
 
-  @CreateDateColumn({ name: 'create_at', type: 'timestamp', default: 'NOW' })
-  createAt: Date
-
-  @UpdateDateColumn({ name: 'update_at', type: 'timestamp' })
-  updateAt: Date
-  
-  @DeleteDateColumn({ name: 'delete_at', type: 'timestamp' })
-  deleteAt: Date
-
-  @OneToOne(() => Recipes, (recipe) => recipe.product)
+  @OneToOne(() => Recipes, (recipe) => recipe.product, {
+    cascade: ["remove"],
+  })
   @JoinColumn()
   recipe: Recipes
 
   @OneToMany(() => OrdersProducts, (orderProduct) => orderProduct.product)
   orderProduct: OrdersProducts[]
   
-  @OneToMany(() => PricesSizes, (priceSize) => priceSize.product)
+  @OneToMany(() => PricesSizes, (priceSize) => priceSize.product, {
+    cascade: ["remove"],
+  })
   priceSize: PricesSizes[]
-
 }

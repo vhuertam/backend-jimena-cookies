@@ -13,7 +13,7 @@ export class RecipeService {
     async getRecipes(): Promise<Recipes[]> {
         try {
             return this.recipeRepository.find({
-                where: { deleteAt: null }
+                where: { }
             });
             
         } catch (error) {
@@ -24,7 +24,7 @@ export class RecipeService {
     async getRecipeById( id: string ): Promise<Recipes> {
         try {
             return this.recipeRepository.findOne({
-                where: { id: id, deleteAt: null }
+                where: { id: id }
             });
             
         } catch (error) {
@@ -97,9 +97,7 @@ export class RecipeService {
             )
         }
 
-        recipe.deleteAt = new Date();
-
-        return this.recipeRepository.save(recipe);
+        return this.recipeRepository.remove(recipe);
 
     }
 }

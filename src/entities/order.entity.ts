@@ -19,21 +19,14 @@ export class Orders {
   @Column({ name: 'total_price', type: 'float', nullable: true })
   totalPrice: number;
 
-  @CreateDateColumn({ name: 'create_at', type: 'timestamp', default: 'NOW' })
-  createAt: Date
-
-  @UpdateDateColumn({ name: 'update_at', type: 'timestamp' })
-  updateAt: Date
-  
-  @DeleteDateColumn({ name: 'delete_at', type: 'timestamp' })
-  deleteAt: Date
-
   @Column({ name: 'id_user', type: 'uuid', nullable: true})
   @JoinColumn({ name: 'id_user' })
   @ManyToOne(() => Users)
   user: Users
 
-  @OneToMany(() => OrdersProducts, (orderProduct) => orderProduct.order)
+  @OneToMany(() => OrdersProducts, (orderProduct) => orderProduct.order, {
+    cascade:['remove']
+  })
   orderProduct: OrdersProducts[]
 
 }

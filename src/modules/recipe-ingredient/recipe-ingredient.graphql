@@ -4,8 +4,8 @@ type Query {
 
 type Mutation {
     createRecipeIngredient( input: RecipeIngredientData ): RecipeIngredient
-    editRecipeIngredient( id: ID, input: RecipeIngredientData ): RecipeIngredient
-    deleteRecipeIngredient( id: ID ): RecipeIngredient
+    editRecipeIngredient( id_rec: ID, id_ing: ID, input: RecipeIngredientDataEdit ): RecipeIngredient
+    deleteRecipeIngredient( id_rec: ID, id_ing: ID ): RecipeIngredient
 }
 
 type RecipeIngredient {
@@ -16,6 +16,9 @@ type RecipeIngredient {
 input RecipeIngredientData {
     idRecipe: String
     idIngredient: String
-    idRecipeEdit: String
-    idIngredientEdit: String
+}
+
+input RecipeIngredientDataEdit {
+    idRecipe: String
+    idIngredient: String
 }

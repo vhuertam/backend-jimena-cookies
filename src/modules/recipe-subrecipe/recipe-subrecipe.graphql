@@ -1,11 +1,11 @@
 type Query {
-    getRecipeSubrecipes: [RecipeSubrecipe]
+    getRecipesSubrecipes: [RecipeSubrecipe]
 }
 
 type Mutation {
     createRecipeSubrecipe( input: RecipeSubrecipeData ): RecipeSubrecipe
-    editRecipeSubrecipe( id: ID, input: RecipeSubrecipeData ): RecipeSubrecipe
-    deleteRecipeSubrecipe( id: ID ): RecipeSubrecipe
+    editRecipeSubrecipe( id_rec: ID, id_sub: ID, input: RecipeSubrecipeDataEdit ): RecipeSubrecipe
+    deleteRecipeSubrecipe( id_rec: ID, id_sub: ID ): RecipeSubrecipe
 }
 
 type RecipeSubrecipe {
@@ -16,6 +16,9 @@ type RecipeSubrecipe {
 input RecipeSubrecipeData {
     idRecipe: String
     idSubrecipe: String
-    idRecipeEdit: String
-    idSubrecipeEdit: String
+}
+
+input RecipeSubrecipeDataEdit {
+    idRecipe: String
+    idSubrecipe: String
 }

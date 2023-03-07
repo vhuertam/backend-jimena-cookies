@@ -12,15 +12,6 @@ export class PricesSizes {
   @Column({ name: 'size', type: 'text', nullable: true })
   size: string;
 
-  @CreateDateColumn({ name: 'create_at', type: 'timestamp', default: 'NOW' })
-  createAt: Date
-
-  @UpdateDateColumn({ name: 'update_at', type: 'timestamp' })
-  updateAt: Date
-  
-  @DeleteDateColumn({ name: 'delete_at', type: 'timestamp' })
-  deleteAt: Date
-
   @Column({ name: 'id_product', type: 'uuid', nullable: true})
   @JoinColumn({ name: 'id_product' })
   @ManyToOne(() => Products)

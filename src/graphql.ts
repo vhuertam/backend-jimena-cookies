@@ -21,8 +21,11 @@ export class IngredientDataEdit {
 export class OrderProductData {
     idOrder?: Nullable<string>;
     idProduct?: Nullable<string>;
-    idOrderEdit?: Nullable<string>;
-    idProductEdit?: Nullable<string>;
+}
+
+export class OrderProductDataEdit {
+    idOrder?: Nullable<string>;
+    idProduct?: Nullable<string>;
 }
 
 export class OrderData {
@@ -66,15 +69,21 @@ export class ProductDataEdit {
 export class RecipeIngredientData {
     idRecipe?: Nullable<string>;
     idIngredient?: Nullable<string>;
-    idRecipeEdit?: Nullable<string>;
-    idIngredientEdit?: Nullable<string>;
+}
+
+export class RecipeIngredientDataEdit {
+    idRecipe?: Nullable<string>;
+    idIngredient?: Nullable<string>;
 }
 
 export class RecipeSubrecipeData {
     idRecipe?: Nullable<string>;
     idSubrecipe?: Nullable<string>;
-    idRecipeEdit?: Nullable<string>;
-    idSubrecipeEdit?: Nullable<string>;
+}
+
+export class RecipeSubrecipeDataEdit {
+    idRecipe?: Nullable<string>;
+    idSubrecipe?: Nullable<string>;
 }
 
 export class RecipeData {
@@ -96,8 +105,11 @@ export class RoleDataEdit {
 export class SubrecipeIngredientData {
     idSubrecipe?: Nullable<string>;
     idIngredient?: Nullable<string>;
-    idSubrecipeEdit?: Nullable<string>;
-    idIngredientEdit?: Nullable<string>;
+}
+
+export class SubrecipeIngredientDataEdit {
+    idSubrecipe?: Nullable<string>;
+    idIngredient?: Nullable<string>;
 }
 
 export class SubrecipeData {
@@ -134,7 +146,7 @@ export abstract class IQuery {
 
     abstract getRecipesIngredients(): Nullable<Nullable<RecipeIngredient>[]> | Promise<Nullable<Nullable<RecipeIngredient>[]>>;
 
-    abstract getRecipeSubrecipes(): Nullable<Nullable<RecipeSubrecipe>[]> | Promise<Nullable<Nullable<RecipeSubrecipe>[]>>;
+    abstract getRecipesSubrecipes(): Nullable<Nullable<RecipeSubrecipe>[]> | Promise<Nullable<Nullable<RecipeSubrecipe>[]>>;
 
     abstract getRecipes(): Nullable<Nullable<Recipe>[]> | Promise<Nullable<Nullable<Recipe>[]>>;
 
@@ -156,9 +168,9 @@ export abstract class IMutation {
 
     abstract createOrderProduct(input?: Nullable<OrderProductData>): Nullable<OrderProduct> | Promise<Nullable<OrderProduct>>;
 
-    abstract editOrderProduct(id?: Nullable<string>, input?: Nullable<OrderProductData>): Nullable<OrderProduct> | Promise<Nullable<OrderProduct>>;
+    abstract editOrderProduct(id_ord?: Nullable<string>, id_pro?: Nullable<string>, input?: Nullable<OrderProductDataEdit>): Nullable<OrderProduct> | Promise<Nullable<OrderProduct>>;
 
-    abstract deleteOrderProduct(id?: Nullable<string>): Nullable<OrderProduct> | Promise<Nullable<OrderProduct>>;
+    abstract deleteOrderProduct(id_ord?: Nullable<string>, id_pro?: Nullable<string>): Nullable<OrderProduct> | Promise<Nullable<OrderProduct>>;
 
     abstract createOrder(input?: Nullable<OrderData>): Nullable<Order> | Promise<Nullable<Order>>;
 
@@ -180,15 +192,15 @@ export abstract class IMutation {
 
     abstract createRecipeIngredient(input?: Nullable<RecipeIngredientData>): Nullable<RecipeIngredient> | Promise<Nullable<RecipeIngredient>>;
 
-    abstract editRecipeIngredient(id?: Nullable<string>, input?: Nullable<RecipeIngredientData>): Nullable<RecipeIngredient> | Promise<Nullable<RecipeIngredient>>;
+    abstract editRecipeIngredient(id_rec?: Nullable<string>, id_ing?: Nullable<string>, input?: Nullable<RecipeIngredientDataEdit>): Nullable<RecipeIngredient> | Promise<Nullable<RecipeIngredient>>;
 
-    abstract deleteRecipeIngredient(id?: Nullable<string>): Nullable<RecipeIngredient> | Promise<Nullable<RecipeIngredient>>;
+    abstract deleteRecipeIngredient(id_rec?: Nullable<string>, id_ing?: Nullable<string>): Nullable<RecipeIngredient> | Promise<Nullable<RecipeIngredient>>;
 
     abstract createRecipeSubrecipe(input?: Nullable<RecipeSubrecipeData>): Nullable<RecipeSubrecipe> | Promise<Nullable<RecipeSubrecipe>>;
 
-    abstract editRecipeSubrecipe(id?: Nullable<string>, input?: Nullable<RecipeSubrecipeData>): Nullable<RecipeSubrecipe> | Promise<Nullable<RecipeSubrecipe>>;
+    abstract editRecipeSubrecipe(id_rec?: Nullable<string>, id_sub?: Nullable<string>, input?: Nullable<RecipeSubrecipeDataEdit>): Nullable<RecipeSubrecipe> | Promise<Nullable<RecipeSubrecipe>>;
 
-    abstract deleteRecipeSubrecipe(id?: Nullable<string>): Nullable<RecipeSubrecipe> | Promise<Nullable<RecipeSubrecipe>>;
+    abstract deleteRecipeSubrecipe(id_rec?: Nullable<string>, id_sub?: Nullable<string>): Nullable<RecipeSubrecipe> | Promise<Nullable<RecipeSubrecipe>>;
 
     abstract createRecipe(input?: Nullable<RecipeData>): Nullable<Recipe> | Promise<Nullable<Recipe>>;
 
@@ -204,9 +216,9 @@ export abstract class IMutation {
 
     abstract createSubrecipeIngredient(input?: Nullable<SubrecipeIngredientData>): Nullable<SubrecipeIngredient> | Promise<Nullable<SubrecipeIngredient>>;
 
-    abstract editSubrecipeIngredient(id?: Nullable<string>, input?: Nullable<SubrecipeIngredientData>): Nullable<SubrecipeIngredient> | Promise<Nullable<SubrecipeIngredient>>;
+    abstract editSubrecipeIngredient(id_sub?: Nullable<string>, id_ing?: Nullable<string>, input?: Nullable<SubrecipeIngredientDataEdit>): Nullable<SubrecipeIngredient> | Promise<Nullable<SubrecipeIngredient>>;
 
-    abstract deleteSubrecipeIngredient(id?: Nullable<string>): Nullable<SubrecipeIngredient> | Promise<Nullable<SubrecipeIngredient>>;
+    abstract deleteSubrecipeIngredient(id_sub?: Nullable<string>, id_ing?: Nullable<string>): Nullable<SubrecipeIngredient> | Promise<Nullable<SubrecipeIngredient>>;
 
     abstract createSubrecipe(input?: Nullable<SubrecipeData>): Nullable<Subrecipe> | Promise<Nullable<Subrecipe>>;
 
