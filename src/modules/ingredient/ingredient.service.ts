@@ -13,7 +13,7 @@ export class IngredientService {
     async getIngredients(): Promise<Ingredients[]> {
         try {
             return this.ingredientRepository.find({
-                where: { deletedAt: null }
+                where: { }
             });
             
         } catch (error) {
@@ -24,7 +24,7 @@ export class IngredientService {
     async getIngredientById( id: string ): Promise<Ingredients> {
         try {
             return this.ingredientRepository.findOne({
-                where: { id: id, deletedAt: null }
+                where: { id: id }
             });
             
         } catch (error) {
@@ -106,9 +106,7 @@ export class IngredientService {
             )
         }
 
-        ingredient.deletedAt = new Date();
-
-        return this.ingredientRepository.save(ingredient);
+        return this.ingredientRepository.remove(ingredient);
 
     }
 }

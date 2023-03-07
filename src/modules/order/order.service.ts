@@ -94,7 +94,7 @@ export class OrderService {
         }
 
         const userById = await this.userRepository.findOne({
-            where:{ id: idUser, deletedAt: null }
+            where:{ id: idUser }
         });
 
         if (!userById) {
@@ -137,7 +137,7 @@ export class OrderService {
 
         const userById = await this.userRepository.findOne({
             relations: ['role'],
-            where:{ id: idUser, deletedAt: null }
+            where:{ id: idUser }
         })
 
         order.client = client;

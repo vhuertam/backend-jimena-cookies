@@ -18,7 +18,7 @@ export class UserService {
     try {
         return this.userRepository.find({
             relations: ['role'],
-            where: {deletedAt: null}
+            where: {}
         });
     } catch (error) {
         throw error;
@@ -29,7 +29,7 @@ export class UserService {
     try {
         return this.userRepository.findOne({
             relations: ['role'],
-            where: { id: id, deletedAt: null }
+            where: { id: id }
         })
     } catch (error) {
         throw error;
@@ -40,7 +40,7 @@ export class UserService {
     try {
         return this.userRepository.findOne({
             relations: ['role'],
-            where: { rut: rut, deletedAt: null }
+            where: { rut: rut }
         })
     } catch (error) {
         throw error;
@@ -51,7 +51,7 @@ export class UserService {
     try {
         return this.userRepository.findOne({
             relations: ['role'],
-            where: { username: username, deletedAt: null }
+            where: { username: username }
         })
     } catch (error) {
         throw error;
@@ -111,7 +111,7 @@ export class UserService {
         }
 
         const roleById = await this.roleRepository.findOne({
-          where: { id: idRole, deleteAt: null }
+          where: { id: idRole }
         })
  
         if (!roleById) {
@@ -153,7 +153,7 @@ export class UserService {
         const { username, rut, idRole } = userDataEdit;
 
         const roleById = await this.roleRepository.findOne({
-          where: { id: idRole, deleteAt: null }
+          where: { id: idRole }
         })
 
         if (!roleById) {
@@ -184,9 +184,7 @@ export class UserService {
             throw new HttpException(`User con id=${id} no existe`, HttpStatus.BAD_REQUEST);
         }
 
-        user.deletedAt = new Date();
-
-        return this.userRepository.save(user);
+        return this.userRepository.remove(user);
         
     } catch (error) {
         throw error;

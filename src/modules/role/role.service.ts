@@ -13,7 +13,7 @@ export class RoleService {
   async getRoles(): Promise<Roles[]> {
     try {
         return this.roleRepository.find({
-            where: { deleteAt: null }
+            where: { }
         });
     } catch (error) {
         throw error;        
@@ -23,7 +23,7 @@ export class RoleService {
   async getRoleById( id: string ): Promise<Roles> {
     try {
         return this.roleRepository.findOne({
-            where: { id: id, deleteAt: null }
+            where: { id: id }
         })
     } catch (error) {
         throw error;
@@ -33,7 +33,7 @@ export class RoleService {
   async getRoleByName( name: string ): Promise<Roles> {
     try {
         return this.roleRepository.findOne({
-            where: { name: name , deleteAt: null }
+            where: { name: name }
         })
     } catch (error) {
         throw error;
@@ -112,9 +112,7 @@ export class RoleService {
             throw new HttpException(`role con id=${id} no existe`, HttpStatus.BAD_REQUEST);
         }
 
-        role.deleteAt = new Date();
-
-        return this.roleRepository.save(role);
+        return this.roleRepository.remove(role);
         
     } catch (error) {
         throw error;

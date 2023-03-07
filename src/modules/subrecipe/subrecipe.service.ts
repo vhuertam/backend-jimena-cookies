@@ -13,7 +13,7 @@ export class SubrecipeService {
     async getSubrecipes(): Promise<Subrecipes[]> {
         try {
             return this.subrecipeRepository.find({
-                where: { deleteAt: null }
+                where: { }
             });
             
         } catch (error) {
@@ -24,7 +24,7 @@ export class SubrecipeService {
     async getSubrecipeById( id: string ): Promise<Subrecipes> {
         try {
             return this.subrecipeRepository.findOne({
-                where: { id: id, deleteAt: null }
+                where: { id: id }
             });
             
         } catch (error) {
@@ -97,9 +97,7 @@ export class SubrecipeService {
             )
         }
 
-        subrecipe.deleteAt = new Date();
-
-        return this.subrecipeRepository.save(subrecipe);
+        return this.subrecipeRepository.remove(subrecipe);
 
     }
 }
