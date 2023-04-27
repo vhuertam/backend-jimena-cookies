@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
-import { Ingredients } from 'src/entities';
+import { Ingredients, RecipesIngredients, SubrecipesIngredients } from 'src/entities';
 import { Ingredient, IngredientData, IngredientDataEdit } from 'src/graphql';
 import { Repository } from 'typeorm';
 
@@ -7,7 +7,11 @@ import { Repository } from 'typeorm';
 export class IngredientService {
     constructor(
         @Inject('INGREDIENT_REPOSITORY')
-        private ingredientRepository: Repository<Ingredients>
+        private ingredientRepository: Repository<Ingredients>,
+        @Inject('RECIPEINGREDIENT_REPOSITORY')
+        private recipeIngredientRepository: Repository<RecipesIngredients>,
+        @Inject('INGREDIENT_REPOSITORY')
+        private subrecipeIngredientRepository: Repository<SubrecipesIngredients>
     ) {}
 
     async getIngredients(): Promise<Ingredients[]> {
@@ -105,6 +109,18 @@ export class IngredientService {
                 HttpStatus.BAD_REQUEST,
             )
         }
+
+        await this.recipeIngredientRepository.createQueryBuilder()
+                .delete()
+                .from(RecipesIngredients)
+                .where("recipes_ingredients.id_ingredient = :id", {id})
+                .execute();
+
+        await this.subrecipeIngredientRepository.createQueryBuilder()
+                .delete()
+                .from(SubrecipesIngredients)
+                .where("subrecipes_ingredients.id_ingredient = :id", {id})
+                .execute();
 
         return this.ingredientRepository.remove(ingredient);
 

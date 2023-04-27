@@ -1,13 +1,23 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
-import { Recipes } from 'src/entities';
-import { Recipe, RecipeData, RecipeDataEdit } from 'src/graphql';
+import { OrdersProducts, PricesSizes, Products, Recipes, RecipesIngredients, RecipesSubrecipes } from 'src/entities';
+import { PriceSize, Recipe, RecipeData, RecipeDataEdit } from 'src/graphql';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class RecipeService {
     constructor(
         @Inject('RECIPE_REPOSITORY')
-        private recipeRepository: Repository<Recipes>
+        private recipeRepository: Repository<Recipes>,
+        @Inject('RECIPESUBRECIPE_REPOSITORY')
+        private recipeSubrecipeRepository: Repository<RecipesSubrecipes>,
+        @Inject('PRODUCT_REPOSITORY')
+        private productRepository: Repository<Products>,
+        @Inject('PRICESIZE_REPOSITORY')
+        private priceSizeRepository: Repository<PricesSizes>,
+        @Inject('ORDERPRODUCT_REPOSITORY')
+        private orderProductRepository: Repository<OrdersProducts>,
+        @Inject('RECIPEINGREDIENT_REPOSITORY')
+        private recipeIngredientRepository: Repository<OrdersProducts>
     ) {}
 
     async getRecipes(): Promise<Recipes[]> {
@@ -97,7 +107,47 @@ export class RecipeService {
             )
         }
 
-        return this.recipeRepository.remove(recipe);
+        const product = await this.productRepository.findOne({
+            where:{ recipe: { id: recipe.id } }
+        })
 
+        if(!product) {
+            throw new HttpException(
+                `El product con id=${product.id} no existe`,
+                HttpStatus.BAD_REQUEST,
+            )
+        }
+
+        await this.priceSizeRepository.createQueryBuilder()
+                .delete()
+                .from(PricesSizes)
+                .where("prices_sizes.id_product = :id_pro", { id_pro: product.id })
+                .execute();
+
+        await this.orderProductRepository.createQueryBuilder()
+                .delete()
+                .from(OrdersProducts)
+                .where("orders_products.id_product = :id_pro", { id_pro: product.id })
+                .execute();      
+
+        await this.recipeSubrecipeRepository.createQueryBuilder()
+                .delete()
+                .from(RecipesSubrecipes)
+                .where("recipes_subrecipes.id_recipe = :id", {id})
+                .execute();
+
+        await this.recipeIngredientRepository.createQueryBuilder()
+                .delete()
+                .from(RecipesIngredients)
+                .where("recipes_ingredients.id_recipe = :id", {id})
+                .execute();
+
+        await this.productRepository.createQueryBuilder()
+                .delete()
+                .from(Products)
+                .where("products.id_recipe = :id", {id})
+                .execute();
+
+        return this.recipeRepository.remove(recipe);
     }
 }

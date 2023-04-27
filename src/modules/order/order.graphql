@@ -16,6 +16,7 @@ type Order {
     dateDelivery: String,
     hourDelivery: String,
     totalPrice: Float,
+    state: Boolean,
     user: User
 }
 
@@ -24,6 +25,7 @@ input OrderData {
     dateDelivery: String,
     hourDelivery: String,
     totalPrice: Float,
+    state: Boolean,
     idUser: String
 }
 
@@ -32,5 +34,6 @@ input OrderDataEdit {
     dateDelivery: String,
     hourDelivery: String,
     totalPrice: Float,
+    state: Boolean,
     idUser: String
 }

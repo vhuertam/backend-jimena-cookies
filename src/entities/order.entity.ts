@@ -19,14 +19,15 @@ export class Orders {
   @Column({ name: 'total_price', type: 'float', nullable: true })
   totalPrice: number;
 
+  @Column({ name: 'state', type: 'boolean', nullable: true })
+  state: boolean;
+
   @Column({ name: 'id_user', type: 'uuid', nullable: true})
   @JoinColumn({ name: 'id_user' })
   @ManyToOne(() => Users)
   user: Users
 
-  @OneToMany(() => OrdersProducts, (orderProduct) => orderProduct.order, {
-    cascade:['remove']
-  })
+  @OneToMany(() => OrdersProducts, (orderProduct) => orderProduct.order)
   orderProduct: OrdersProducts[]
 
 }

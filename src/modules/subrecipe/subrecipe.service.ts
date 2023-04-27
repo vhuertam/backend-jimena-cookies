@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
-import { Subrecipes } from 'src/entities';
+import { RecipesSubrecipes, Subrecipes, SubrecipesIngredients } from 'src/entities';
 import { Subrecipe, SubrecipeData, SubrecipeDataEdit } from 'src/graphql';
 import { Repository } from 'typeorm';
 
@@ -7,7 +7,11 @@ import { Repository } from 'typeorm';
 export class SubrecipeService {
     constructor(
         @Inject('SUBRECIPE_REPOSITORY')
-        private subrecipeRepository: Repository<Subrecipes>
+        private subrecipeRepository: Repository<Subrecipes>,
+        @Inject('RECIPESUBRECIPE_REPOSITORY')
+        private recipeSubrecipeRepository: Repository<RecipesSubrecipes>,
+        @Inject('SUBRECIPEINGREDIENT_REPOSITORY')
+        private subrecipeIngredientRepository: Repository<SubrecipesIngredients>
     ) {}
 
     async getSubrecipes(): Promise<Subrecipes[]> {
@@ -97,6 +101,18 @@ export class SubrecipeService {
             )
         }
 
+        await this.recipeSubrecipeRepository.createQueryBuilder()
+                .delete()
+                .from(RecipesSubrecipes)
+                .where("recipes_subrecipes.id_subrecipe = :id", {id})
+                .execute();
+
+        await this.subrecipeIngredientRepository.createQueryBuilder()
+                .delete()
+                .from(SubrecipesIngredients)
+                .where("subrecipes_ingredients.id_subrecipe = :id", {id})
+                .execute();
+        
         return this.subrecipeRepository.remove(subrecipe);
 
     }

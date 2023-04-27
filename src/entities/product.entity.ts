@@ -11,17 +11,13 @@ export class Products {
   @Column({ name: 'name', type: 'text', nullable: true })
   name: string;
 
-  @OneToOne(() => Recipes, (recipe) => recipe.product, {
-    cascade: ["remove"],
-  })
-  @JoinColumn()
+  @OneToOne(() => Recipes, (recipe) => recipe.product)
+  @JoinColumn({ name: 'id_recipe' })
   recipe: Recipes
 
   @OneToMany(() => OrdersProducts, (orderProduct) => orderProduct.product)
   orderProduct: OrdersProducts[]
   
-  @OneToMany(() => PricesSizes, (priceSize) => priceSize.product, {
-    cascade: ["remove"],
-  })
+  @OneToMany(() => PricesSizes, (priceSize) => priceSize.product)
   priceSize: PricesSizes[]
 }

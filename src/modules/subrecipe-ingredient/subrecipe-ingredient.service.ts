@@ -44,7 +44,7 @@ export class SubrecipeIngredientService {
         .innerJoinAndSelect("subrecipes_ingredients.ingredient", 'i')
         .innerJoinAndSelect("subrecipes_ingredients.subrecipe", 's')
         .where('subrecipes_ingredients.id_subrecipe = :id_sub', { id_sub })
-        .andWhere('subrecipes_ingredients.id_ingredient = :id_ing', { id_ing })
+        .orWhere('subrecipes_ingredients.id_ingredient = :id_ing', { id_ing })
         .getOne();
 
     } catch (error) {

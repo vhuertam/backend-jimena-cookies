@@ -1,7 +1,7 @@
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import { Order, OrderData, OrderDataEdit } from 'src/graphql';
 import { Repository } from 'typeorm';
-import { Orders, Users } from '../../entities';
+import { Orders, OrdersProducts, Users } from '../../entities';
 
 @Injectable()
 export class OrderService {
@@ -10,6 +10,8 @@ export class OrderService {
     private orderRepository: Repository<Orders>,
     @Inject('USER_REPOSITORY')
     private userRepository: Repository<Users>,
+    @Inject('ORDERPRODUCT_REPOSITORY')
+    private orderProductRepository: Repository<OrdersProducts>,
   ) {}
 
   async getOrders(): Promise<Orders[]> {
@@ -47,7 +49,7 @@ export class OrderService {
     
   async createOrder( orderData: OrderData ): Promise<Order> {
     try {
-        const { client, dateDelivery, hourDelivery, idUser, totalPrice } = orderData;
+        const { client, dateDelivery, hourDelivery, idUser, totalPrice, state } = orderData;
 
         if (!client) {
           throw new HttpException(
@@ -110,6 +112,7 @@ export class OrderService {
         order.dateDelivery = dateDelivery;
         order.hourDelivery = hourDelivery;
         order.totalPrice = totalPrice;
+        order.state = false;
         order.user = userById; 
 
         await this.orderRepository.save(order);
@@ -162,10 +165,14 @@ export class OrderService {
             throw new HttpException(`Order con id=${id} no existe`, HttpStatus.BAD_REQUEST);
         }
 
-        await this.orderRepository.remove(order);
+        await this.orderProductRepository.createQueryBuilder()
+                .delete()
+                .from(OrdersProducts)
+                .where("orders_products.id_order = :id", { id })
+                .execute(); 
 
-        return;
-        
+        return this.orderRepository.remove(order);
+
     } catch (error) {
         throw error;
     }

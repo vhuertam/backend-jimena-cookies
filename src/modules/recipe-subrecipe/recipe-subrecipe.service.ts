@@ -44,7 +44,7 @@ export class RecipeSubrecipeService {
         .innerJoinAndSelect("recipes_subrecipes.recipe", 'r')
         .innerJoinAndSelect("recipes_subrecipes.subrecipe", 's')
         .where('recipes_subrecipes.id_recipe = :id_rec', { id_rec })
-        .andWhere('recipes_subrecipes.id_subrecipe = :id_sub', { id_sub })
+        .orWhere('recipes_subrecipes.id_subrecipe = :id_sub', { id_sub })
         .getOne();
 
     } catch (error) {
@@ -101,11 +101,6 @@ export class RecipeSubrecipeService {
   ): Promise<RecipesSubrecipes> {
     try {
       const recipeSubrecipe = await this.getRecipeSubrecipeById(id_rec, id_sub);
-
-      console.log(
-        '🚀 ~ file: Recipe-subrecipe.service.ts:94 ~ RecipeSubrecipeService ~ editRecipeSubrecipe ~ RecipeSubrecipe:',
-        RecipeSubrecipe,
-      );
 
       if (!recipeSubrecipe) {
         throw new HttpException(

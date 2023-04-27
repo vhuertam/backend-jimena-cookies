@@ -33,6 +33,7 @@ export class OrderData {
     dateDelivery?: Nullable<string>;
     hourDelivery?: Nullable<string>;
     totalPrice?: Nullable<number>;
+    state?: Nullable<boolean>;
     idUser?: Nullable<string>;
 }
 
@@ -41,6 +42,7 @@ export class OrderDataEdit {
     dateDelivery?: Nullable<string>;
     hourDelivery?: Nullable<string>;
     totalPrice?: Nullable<number>;
+    state?: Nullable<boolean>;
     idUser?: Nullable<string>;
 }
 
@@ -250,6 +252,7 @@ export class Order {
     dateDelivery?: Nullable<string>;
     hourDelivery?: Nullable<string>;
     totalPrice?: Nullable<number>;
+    state?: Nullable<boolean>;
     user?: Nullable<User>;
 }
 

@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
-import { Products, Recipes } from 'src/entities';
+import { OrdersProducts, PricesSizes, Products, Recipes } from 'src/entities';
 import { Product, ProductData, ProductDataEdit } from 'src/graphql';
 import { Repository } from 'typeorm';
 
@@ -9,7 +9,11 @@ export class ProductService {
         @Inject('PRODUCT_REPOSITORY')
         private productRepository: Repository<Products>,
         @Inject('RECIPE_REPOSITORY')
-        private recipeRepository: Repository<Recipes>
+        private recipeRepository: Repository<Recipes>,
+        @Inject('PRICESIZE_REPOSITORY')
+        private priceSizeRepository: Repository<PricesSizes>,
+        @Inject('ORDERPRODUCT_REPOSITORY')
+        private orderProductRepository: Repository<OrdersProducts>
     ) {}
 
     async getProducts(): Promise<Products[]> {
@@ -132,9 +136,19 @@ export class ProductService {
             )
         }
 
-        await this.productRepository.remove(product);
+        await this.priceSizeRepository.createQueryBuilder()
+                .delete()
+                .from(PricesSizes)
+                .where("prices_sizes.id_product = :id", { id })
+                .execute();
 
-        return;
+        await this.orderProductRepository.createQueryBuilder()
+                .delete()
+                .from(OrdersProducts)
+                .where("orders_products.id_product = :id", { id })
+                .execute();      
+
+        return this.productRepository.remove(product);
 
     }
 }
